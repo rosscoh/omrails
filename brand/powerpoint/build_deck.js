@@ -517,16 +517,22 @@ async function build() {
       ["100%", "Remote-first", C.blue],
       ["Millions", "People served", C.amber],
     ];
-    const sx = [6.85, 10.15];
-    const sy = [1.95, 4.05];
+    // Grid maths rather than hand-placed coordinates, so the right-hand column
+    // lands exactly on the page margin and both gutters match.
+    const sGap = 0.3;
+    const sLeft = 6.6;
+    const sW = (W - M - sLeft - sGap) / 2;
+    const sH = 1.9;
+    const sx = [sLeft, sLeft + sW + sGap];
+    const sy = [1.95, 1.95 + sH + sGap];
     stats.forEach(([big, label, col], i) => {
       const x = sx[i % 2];
       const y = sy[Math.floor(i / 2)];
-      card(s, x, y, 2.98, 1.85, { fill: C.paper, line: "none" });
+      card(s, x, y, sW, sH, { fill: C.paper, line: "none" });
       s.addText(big, {
-        x: x + 0.28,
-        y: y + 0.38,
-        w: 2.42,
+        x: x + 0.3,
+        y: y + 0.4,
+        w: sW - 0.6,
         h: 0.75,
         fontFace: F.head,
         fontSize: 34,
@@ -537,9 +543,9 @@ async function build() {
         valign: "middle",
       });
       s.addText(label.toUpperCase(), {
-        x: x + 0.28,
-        y: y + 1.16,
-        w: 2.42,
+        x: x + 0.3,
+        y: y + 1.2,
+        w: sW - 0.6,
         h: 0.3,
         fontFace: F.head,
         fontSize: 10,
@@ -559,19 +565,18 @@ async function build() {
     heading(s, "Our brands", "One portfolio, nine front doors");
 
     const cols = 3;
-    const gap = 0.3;
+    const gap = 0.3; // same gutter horizontally and vertically
     const cw = (CW - gap * (cols - 1)) / cols;
-    const ch = 1.25;
-    const rgap = 0.2;
+    const ch = 1.2;
     CONTENT.brands.forEach(([name, cat, iconName], i) => {
       const x = M + (i % cols) * (cw + gap);
-      const y = 2.35 + Math.floor(i / cols) * (ch + rgap);
+      const y = 2.35 + Math.floor(i / cols) * (ch + gap);
       card(s, x, y, cw, ch);
-      chip(s, x + 0.3, y + 0.37, 0.5, ICONS[iconName], C.blueSoft);
+      chip(s, x + 0.3, y + 0.35, 0.5, ICONS[iconName], C.blueSoft);
       s.addText(name, {
         x: x + 0.95,
-        y: y + 0.34,
-        w: cw - 1.2,
+        y: y + 0.32,
+        w: cw - 1.25,
         h: 0.3,
         fontFace: F.head,
         fontSize: 14,
@@ -582,8 +587,8 @@ async function build() {
       });
       s.addText(cat, {
         x: x + 0.95,
-        y: y + 0.63,
-        w: cw - 1.2,
+        y: y + 0.61,
+        w: cw - 1.25,
         h: 0.26,
         fontFace: F.body,
         fontSize: 11,
